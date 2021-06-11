@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     // Main loop
     cv::Mat im;
     cv::VideoCapture cap;
-    cap.open(0);
+    cap.open("vid1.webm");
     if(!cap.isOpened()){
         cerr<< "Error! camera can not open\n";
         return -1;
