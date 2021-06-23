@@ -1,7 +1,9 @@
 # ORB-SLAM2
 **Authors:** [Raul Mur-Artal](http://webdiis.unizar.es/~raulmur/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/), [J. M. M. Montiel](http://webdiis.unizar.es/~josemari/) and [Dorian Galvez-Lopez](http://doriangalvez.com/) ([DBoW2](https://github.com/dorian3d/DBoW2))
 
-**Note:** This is a modified version of original [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2) and features implemented by [Mathew Denny](https://github.com/MathewDenny/ORB_SLAM2) and fixed by [Hangqiu](https://github.com/hangqiu/ORB_SLAM2); binary vocabulary loading from [Poine](https://github.com/poine/ORB_SLAM2). Other good features from other contributors will be merged soon.
+**Note:** This is a modified version of original [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2) and features implemented by [Mathew Denny](https://github.com/MathewDenny/ORB_SLAM2) and fixed by [Hangqiu](https://github.com/hangqiu/ORB_SLAM2); binary vocabulary loading from [Poine](https://github.com/poine/ORB_SLAM2). Initially done by [YuYou](https://github.com/yuyou/ORB_SLAM2).
+
+**23 June 2021**: Updated dockerfiles to support Ubuntu 18.04
 
 **26 June 2020**: OpenCV 4.2.0 and Eigen 3 are supported (see the dockerfile).
 
@@ -26,6 +28,20 @@ alt="ORB-SLAM2" width="240" height="180" border="10" /></a>
 [Stereo and RGB-D] Raúl Mur-Artal and Juan D. Tardós. **ORB-SLAM2: an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras**. *IEEE Transactions on Robotics,* vol. 33, no. 5, pp. 1255-1262, 2017. **[PDF](https://128.84.21.199/pdf/1610.06475.pdf)**.
 
 [DBoW2 Place Recognizer] Dorian Gálvez-López and Juan D. Tardós. **Bags of Binary Words for Fast Place Recognition in Image Sequences**. *IEEE Transactions on Robotics,* vol. 28, no. 5, pp.  1188-1197, 2012. **[PDF](http://doriangalvez.com/php/dl.php?dlp=GalvezTRO12.pdf)**
+
+# Contents
+
+- [1. License](#-1.-License)
+- [2. Prerequisites](#-2.-Prerequisites)
+- [3. Building ORB-SLAM2 library and examples](#-3.-Building-ORB-SLAM2-library-and-examples)
+- [5. Stereo Examples](#-5.-Stereo-Examples)
+- [6. RGB-D Example](#-6.-RGB-D-Example)
+- [7. ROS Examples](#-7.-ROS-Examples)
+- [8. Processing your own sequences](#-8.-Processing-your-own-sequences)
+- [9. SLAM and Localization Modes](#-9.-SLAM-and-Localization-Modes)
+- [10. Docker image](#-10.-Docker-image)
+
+
 
 # 1. License
 
@@ -107,7 +123,7 @@ bash build_osx.sh
 
 ``` 
 
-#4. Monocular Examples
+# 4. Monocular Examples
 
 ## TUM Dataset
 
