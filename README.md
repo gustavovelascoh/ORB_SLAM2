@@ -1,7 +1,9 @@
 # ORB-SLAM2
 **Authors:** [Raul Mur-Artal](http://webdiis.unizar.es/~raulmur/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/), [J. M. M. Montiel](http://webdiis.unizar.es/~josemari/) and [Dorian Galvez-Lopez](http://doriangalvez.com/) ([DBoW2](https://github.com/dorian3d/DBoW2))
 
-**Note:** This is a modified version of original [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2) and features implemented by [Mathew Denny](https://github.com/MathewDenny/ORB_SLAM2) and fixed by [Hangqiu](https://github.com/hangqiu/ORB_SLAM2); binary vocabulary loading from [Poine](https://github.com/poine/ORB_SLAM2). Other good features from other contributors will be merged soon.
+**Note:** This is a modified version of original [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2) and features implemented by [Mathew Denny](https://github.com/MathewDenny/ORB_SLAM2) and fixed by [Hangqiu](https://github.com/hangqiu/ORB_SLAM2); binary vocabulary loading from [Poine](https://github.com/poine/ORB_SLAM2). Initially done by [YuYou](https://github.com/yuyou/ORB_SLAM2).
+
+**24 June 2021**: Updated dockerfiles to support Ubuntu 18.04
 
 **26 June 2020**: OpenCV 4.2.0 and Eigen 3 are supported (see the dockerfile).
 
@@ -26,6 +28,21 @@ alt="ORB-SLAM2" width="240" height="180" border="10" /></a>
 [Stereo and RGB-D] Raúl Mur-Artal and Juan D. Tardós. **ORB-SLAM2: an Open-Source SLAM System for Monocular, Stereo and RGB-D Cameras**. *IEEE Transactions on Robotics,* vol. 33, no. 5, pp. 1255-1262, 2017. **[PDF](https://128.84.21.199/pdf/1610.06475.pdf)**.
 
 [DBoW2 Place Recognizer] Dorian Gálvez-López and Juan D. Tardós. **Bags of Binary Words for Fast Place Recognition in Image Sequences**. *IEEE Transactions on Robotics,* vol. 28, no. 5, pp.  1188-1197, 2012. **[PDF](http://doriangalvez.com/php/dl.php?dlp=GalvezTRO12.pdf)**
+
+# Contents
+
+- [1. License](#1-License)
+- [2. Prerequisites](#2-Prerequisites)
+- [3. Building ORB-SLAM2 library and examples](#3-Building-ORB-SLAM2-library-and-examples)
+- [4. Monocular Examples](#4-Monocular-Examples)
+- [5. Stereo Examples](#5-Stereo-Examples)
+- [6. RGB-D Example](#6-RGB-D-Example)
+- [7. ROS Examples](#7-ROS-Examples)
+- [8. Processing your own sequences](#8-Processing-your-own-sequences)
+- [9. SLAM and Localization Modes](#9-SLAM-and-Localization-Modes)
+- [10. Docker image](#10-Docker-image)
+
+
 
 # 1. License
 
@@ -107,7 +124,7 @@ bash build_osx.sh
 
 ``` 
 
-#4. Monocular Examples
+# 4. Monocular Examples
 
 ## TUM Dataset
 
@@ -258,8 +275,8 @@ This mode can be used when you have a good map of your working area. In this mod
 
 A Dockerfile is provided under the /docker directory and the image is available in docker hub. You can, of course, modify the Dockerfile and build your own image.
 
-### Build Docker image
-There are two Dockerfile provided. The "Dockerfile.ubuntu" is used to build the Ubuntu and third-party libs.
+### Building Docker image
+There are two Dockerfile provided. The "Dockerfile.ubuntu" files is used to build the Ubuntu and third-party libs. The "Dockerfile" file uses the image created by the first dockerfile and clones ORBSLAM2 and build it. 
 
 ```
 docker build -t orb_slam2:build -f Dockerfile.ubuntu ./docker
@@ -278,7 +295,7 @@ docker pull youyu/orb_slam2:latest
 You have to run the Docker image under the GUI (X) environment.
 
 ```
-docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  youyu/orb_slam2:latest
+docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  gustavovelascoh/orb_slam2:latest
 ```
 
 You have to use "-v" to mount your local data directory into the container.
@@ -286,10 +303,10 @@ Check Docker doc for more detailed information.
 
 ### Develop ORB-SLAM2 with Ubuntu build image
 
-You can develop and compile ORB-SLAM2 with a pre-build Ubuntu 16.04 image, with all 3rd-party dependencies resolved already.
+You can develop and compile ORB-SLAM2 with a pre-build Ubuntu 18.04 image, with all 3rd-party dependencies resolved already.
 
 ```
-docker run -it --rm -v $(pwd):/ORM_SLAM2 youyu/ubuntu:16.04
+docker run -it --rm -v $(pwd):/ORM_SLAM2 gustavovelascoh/orb_slam2:build
 cd /ORB_SLAM2
 ./build.sh
 
