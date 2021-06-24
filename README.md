@@ -1,9 +1,9 @@
 # ORB-SLAM2
 **Authors:** [Raul Mur-Artal](http://webdiis.unizar.es/~raulmur/), [Juan D. Tardos](http://webdiis.unizar.es/~jdtardos/), [J. M. M. Montiel](http://webdiis.unizar.es/~josemari/) and [Dorian Galvez-Lopez](http://doriangalvez.com/) ([DBoW2](https://github.com/dorian3d/DBoW2))
 
-**Note:** This is a modified version of original [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2) and features implemented by [Mathew Denny](https://github.com/MathewDenny/ORB_SLAM2) and fixed by [Hangqiu](https://github.com/hangqiu/ORB_SLAM2); binary vocabulary loading from [Poine](https://github.com/poine/ORB_SLAM2). Initially done by [YuYou](https://github.com/yuyou/ORB_SLAM2).
+**Note:** This is a modified version of original [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2) and features implemented by [Mathew Denny](https://github.com/MathewDenny/ORB_SLAM2) and fixed by [Hangqiu](https://github.com/hangqiu/ORB_SLAM2); binary vocabulary loading from [Poine](https://github.com/poine/ORB_SLAM2). Initially done by [YuYou](https://github.com/yuyou/ORB_SLAM2). Webcam support by [gauti1311](https://github.com/gauti1311/ORB_SLAM2).
 
-**24 June 2021**: Updated dockerfiles to support Ubuntu 18.04
+**24 June 2021**: Updated dockerfiles to support Ubuntu 18.04 and added webcam support.
 
 **26 June 2020**: OpenCV 4.2.0 and Eigen 3 are supported (see the dockerfile).
 
@@ -40,8 +40,8 @@ alt="ORB-SLAM2" width="240" height="180" border="10" /></a>
 - [7. ROS Examples](#7-ROS-Examples)
 - [8. Processing your own sequences](#8-Processing-your-own-sequences)
 - [9. SLAM and Localization Modes](#9-SLAM-and-Localization-Modes)
-- [10. Docker image](#10-Docker-image)
-
+- [10. Webcam example](#10-Webcam-example)
+- [11. Docker image](#11-Docker-image)
 
 
 # 1. License
@@ -111,7 +111,7 @@ chmod +x build.sh
 ./build.sh
 ```
 
-This will create **libORB_SLAM2.so**  at *lib* folder and the executables **mono_tum**, **mono_kitti**, **rgbd_tum**, **stereo_kitti**, **mono_euroc** and **stereo_euroc** in *Examples* folder.
+This will create **libORB_SLAM2.so**  at *lib* folder and the executables **mono_tum**, **mono_kitti**, **rgbd_tum**, **stereo_kitti**, **mono_euroc**, **stereo_euroc** and **mono_webcam** in *Examples* folder.
 
 ## 3.1 Build for Mac OSX
 
@@ -271,9 +271,19 @@ This is the default mode. The system runs in parallal three threads: Tracking, L
 ### Localization Mode
 This mode can be used when you have a good map of your working area. In this mode the Local Mapping and Loop Closing are deactivated. The system localizes the camera in the map (which is no longer updated), using relocalization if needed.
 
-# 10. Docker image
+# 10. Webcam Example
 
-A Dockerfile is provided under the /docker directory and the image is available in docker hub. You can, of course, modify the Dockerfile and build your own image.
+Execute the following command and change `PATH_TO_DEVICE` to your device, e.g. `/dev/video0`:
+
+```
+./mono_webcam ../../Vocabulary/ORBvoc.bin webcam.yaml PATH_TO_DEVICE
+```
+
+This example is also usable from a docker container (see section below).
+
+# 11. Docker image
+
+A Dockerfile is provided under the /Dockerfile directory and the image is available in docker hub. You can, of course, modify the Dockerfile and build your own image.
 
 ### Building Docker image
 There are two Dockerfile provided. The "Dockerfile.ubuntu" files is used to build the Ubuntu and third-party libs. The "Dockerfile" file uses the image created by the first dockerfile and clones ORBSLAM2 and build it. 
@@ -286,8 +296,9 @@ docker build -t orb_slam2:dev -f Dockerfile ./docker
 ### Pull Docker image
 
 The ORB-SLAM2 lib and the examples are built under */opt/ORB_SLAM2*
+
 ```
-docker pull youyu/orb_slam2:latest
+docker pull gustavovelascoh/orb_slam2:latest
 ```
 
 ### Run ORB-SLAM2 Docker image
@@ -295,10 +306,14 @@ docker pull youyu/orb_slam2:latest
 You have to run the Docker image under the GUI (X) environment.
 
 ```
-docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  gustavovelascoh/orb_slam2:latest
+$ xhost +local:docker # Allows docker to use X server
+$ docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  gustavovelascoh/orb_slam2:latest
 ```
 
 You have to use "-v" to mount your local data directory into the container.
+
+For running the webcam example and allow docker to access your device include `--device=/dev/video3:/dev/video3` where `/dev/video3` should be changed to your actual device.
+
 Check Docker doc for more detailed information.
 
 ### Develop ORB-SLAM2 with Ubuntu build image

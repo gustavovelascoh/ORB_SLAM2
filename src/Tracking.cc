@@ -615,7 +615,7 @@ void Tracking::MonocularInitialization()
     if(!mpInitializer)
     {
         // Set Reference Frame
-        if(mCurrentFrame.mvKeys.size()>100)
+        if(mCurrentFrame.mvKeys.size()>80)
         {
             mInitialFrame = Frame(mCurrentFrame);
             mLastFrame = Frame(mCurrentFrame);
@@ -638,7 +638,7 @@ void Tracking::MonocularInitialization()
     else
     {
         // Try to initialize
-        if((int)mCurrentFrame.mvKeys.size()<=100)
+        if((int)mCurrentFrame.mvKeys.size()<=80)
         {
 
     		//cout << __FUNCTION__ << "old.The Key Frame-s points are less: " << mCurrentFrame.mvKeys.size() << endl;
@@ -653,7 +653,7 @@ void Tracking::MonocularInitialization()
         int nmatches = matcher.SearchForInitialization(mInitialFrame,mCurrentFrame,mvbPrevMatched,mvIniMatches,100);
 
         // Check if there are enough correspondences
-        if(nmatches<100)
+        if(nmatches<50)
         {
     		cout << __FUNCTION__ << "ORB extraction : No enough correspondesnces(<100) " << nmatches << endl;
             delete mpInitializer;
@@ -745,7 +745,7 @@ void Tracking::CreateInitialMapMonocular()
     float medianDepth = pKFini->ComputeSceneMedianDepth(2);
     float invMedianDepth = 1.0f/medianDepth;
 
-    if(medianDepth<0 || pKFcur->TrackedMapPoints(1)<100)
+    if(medianDepth<0 || pKFcur->TrackedMapPoints(1)<50)
     {
         cout << "Wrong initialization, reseting... map points(100):"
 		<< pKFcur->TrackedMapPoints(1)
