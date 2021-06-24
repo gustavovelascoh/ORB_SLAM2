@@ -1,4 +1,4 @@
-FROM youyu/ubuntu:16.04
+FROM gustavovelascoh/orb_slam2:build
 # Or use your own build image
 # FROM orb_slam2:build
 MAINTAINER Yu You <youyu.youyu@gmail.com>

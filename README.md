@@ -321,7 +321,7 @@ Check Docker doc for more detailed information.
 You can develop and compile ORB-SLAM2 with a pre-build Ubuntu 18.04 image, with all 3rd-party dependencies resolved already.
 
 ```
-docker run -it --rm -v $(pwd):/ORM_SLAM2 gustavovelascoh/orb_slam2:build
+docker run -it --rm -v $(pwd):/ORM_SLAM2 gustavovelascoh/orb_slam2:latest
 cd /ORB_SLAM2
 ./build.sh
 
