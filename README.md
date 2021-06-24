@@ -3,7 +3,7 @@
 
 **Note:** This is a modified version of original [ORB_SLAM2](https://github.com/raulmur/ORB_SLAM2) and features implemented by [Mathew Denny](https://github.com/MathewDenny/ORB_SLAM2) and fixed by [Hangqiu](https://github.com/hangqiu/ORB_SLAM2); binary vocabulary loading from [Poine](https://github.com/poine/ORB_SLAM2). Initially done by [YuYou](https://github.com/yuyou/ORB_SLAM2).
 
-**23 June 2021**: Updated dockerfiles to support Ubuntu 18.04
+**24 June 2021**: Updated dockerfiles to support Ubuntu 18.04
 
 **26 June 2020**: OpenCV 4.2.0 and Eigen 3 are supported (see the dockerfile).
 
@@ -275,8 +275,8 @@ This mode can be used when you have a good map of your working area. In this mod
 
 A Dockerfile is provided under the /docker directory and the image is available in docker hub. You can, of course, modify the Dockerfile and build your own image.
 
-### Build Docker image
-There are two Dockerfile provided. The "Dockerfile.ubuntu" is used to build the Ubuntu and third-party libs.
+### Building Docker image
+There are two Dockerfile provided. The "Dockerfile.ubuntu" files is used to build the Ubuntu and third-party libs. The "Dockerfile" file uses the image created by the first dockerfile and clones ORBSLAM2 and build it. 
 
 ```
 docker build -t orb_slam2:build -f Dockerfile.ubuntu ./docker
@@ -295,7 +295,7 @@ docker pull youyu/orb_slam2:latest
 You have to run the Docker image under the GUI (X) environment.
 
 ```
-docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  youyu/orb_slam2:latest
+docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  gustavovelascoh/orb_slam2:latest
 ```
 
 You have to use "-v" to mount your local data directory into the container.
@@ -303,10 +303,10 @@ Check Docker doc for more detailed information.
 
 ### Develop ORB-SLAM2 with Ubuntu build image
 
-You can develop and compile ORB-SLAM2 with a pre-build Ubuntu 16.04 image, with all 3rd-party dependencies resolved already.
+You can develop and compile ORB-SLAM2 with a pre-build Ubuntu 18.04 image, with all 3rd-party dependencies resolved already.
 
 ```
-docker run -it --rm -v $(pwd):/ORM_SLAM2 youyu/ubuntu:16.04
+docker run -it --rm -v $(pwd):/ORM_SLAM2 gustavovelascoh/orb_slam2:build
 cd /ORB_SLAM2
 ./build.sh
 
