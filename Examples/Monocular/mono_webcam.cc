@@ -32,9 +32,11 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    if(argc != 3)
+    if(argc != 4)
     {
-        cerr << endl << "Usage: ./mono_tum path_to_vocabulary path_to_settings " << endl;
+        cerr << endl << "Usage: ./mono_tum path_to_vocabulary path_to_settings camera_input " << endl;
+        cerr << endl << "Example:  " << endl;
+        cerr << endl << "./mono_webcam ../../Vocabulary/ORBvoc.bin webcam.yaml /dev/video2" << endl;
         return 1;
     }
 
@@ -47,7 +49,7 @@ int main(int argc, char **argv)
     // Main loop
     cv::Mat im;
     cv::VideoCapture cap;
-    cap.open("vid1.webm");
+    cap.open(argv[3]);
     if(!cap.isOpened()){
         cerr<< "Error! camera can not open\n";
         return -1;
