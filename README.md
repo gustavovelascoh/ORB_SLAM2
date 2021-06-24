@@ -285,12 +285,19 @@ This example is also usable from a docker container (see section below).
 
 A Dockerfile is provided under the /Dockerfile directory and the image is available in docker hub. You can, of course, modify the Dockerfile and build your own image.
 
+The images are hosted in dockerhub and there are two tags available:
+
+- **build**: It is Ubuntu 18.04 with all dependencies installed + OpenCV 4.2.0 + Eigen 3.2.10 + Pangolin.
+- **latest**: It is the "build" image with the last commit of the master branch of this repo already included and built.
+
 ### Building Docker image
-There are two Dockerfile provided. The "Dockerfile.ubuntu" files is used to build the Ubuntu and third-party libs. The "Dockerfile" file uses the image created by the first dockerfile and clones ORBSLAM2 and build it. 
+There are two Dockerfile provided. The "Dockerfile.ubuntu" files is used to build the Ubuntu 18.04 image and third-party libs. The "Dockerfile" file uses the image created by the first dockerfile and clones ORBSLAM2 and builds it. 
+
+For creating the images by yourself instead of pulling them you can use:
 
 ```
 docker build -t orb_slam2:build -f Dockerfile.ubuntu ./docker
-docker build -t orb_slam2:dev -f Dockerfile ./docker
+docker build -t orb_slam2:test -f Dockerfile ./docker
 ```
 
 ### Pull Docker image
@@ -303,14 +310,14 @@ docker pull gustavovelascoh/orb_slam2:latest
 
 ### Run ORB-SLAM2 Docker image
 
-You have to run the Docker image under the GUI (X) environment.
+In order to test ORB_SLAM from the container you have to run the Docker image under the GUI (X) environment. This can be done by using the following commands.
 
 ```
 $ xhost +local:docker # Allows docker to use X server
 $ docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix  gustavovelascoh/orb_slam2:latest
 ```
 
-You have to use "-v" to mount your local data directory into the container.
+You have to use "-v" to mount your local data directory into the container. The option "--rm" removes the container once you finish the execution.
 
 For running the webcam example and allow docker to access your device include `--device=/dev/video3:/dev/video3` where `/dev/video3` should be changed to your actual device.
 
@@ -318,11 +325,13 @@ Check Docker doc for more detailed information.
 
 ### Develop ORB-SLAM2 with Ubuntu build image
 
-You can develop and compile ORB-SLAM2 with a pre-build Ubuntu 18.04 image, with all 3rd-party dependencies resolved already.
+You can develop and compile ORB-SLAM2 with the pre-build Ubuntu 18.04 image, having all 3rd-party dependencies resolved already.
 
 ```
-docker run -it --rm -v $(pwd):/ORM_SLAM2 gustavovelascoh/orb_slam2:latest
+docker run -it --rm -v $(pwd):/ORM_SLAM2 gustavovelascoh/orb_slam2:build
 cd /ORB_SLAM2
 ./build.sh
 
 ```
+
+In this case you might want to remove the "--rm" option to preserve the container
